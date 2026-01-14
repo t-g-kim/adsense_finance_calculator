@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Planner | Finance Calculator Hub</title>
+    <meta name="description" content="Free credit card payoff calculator - Find out how long it takes to pay off credit card debt and how much interest you'll pay.">
+    <meta name="keywords" content="credit card payoff calculator, credit card debt, payoff calculator, debt calculator">
+    
+    <title>Credit Card Payoff Calculator | Finance Calculator Hub</title>
     <link rel="stylesheet" href="css/style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575" crossorigin="anonymous"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -16,12 +22,226 @@
             </div>
         </div>
     </header>
+
     <main class="container">
         <div class="calculator-page">
-            <h2>📊 Budget Planner - Coming Soon</h2>
-            <p>Track your income, expenses, and savings goals.</p>
-            <a href="index.html" class="btn-primary">Back to Home</a>
+            <div class="calculator-header">
+                <h2>💳 Credit Card Payoff Calculator</h2>
+                <p>Calculate how long it takes to pay off your credit card debt</p>
+            </div>
+
+            <div class="calculator-layout">
+                <div class="calculator-main">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="balance">Credit Card Balance ($)</label>
+                            <input type="number" id="balance" placeholder="5000" value="5000" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interestRate">Annual Interest Rate (APR %)</label>
+                            <input type="number" id="interestRate" placeholder="18" value="18" min="0" max="50" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthlyPayment">Monthly Payment ($)</label>
+                            <input type="number" id="monthlyPayment" placeholder="200" value="200" min="0">
+                            <small id="minimumPayment">Minimum payment: $0</small>
+                        </div>
+
+                        <button id="calculateBtn" class="btn-primary btn-large">Calculate Payoff</button>
+                        <button id="resetBtn" class="btn-secondary btn-large">Reset</button>
+                    </div>
+
+                    <div id="result" class="result-container" style="display: none;">
+                        <h3>Payoff Summary</h3>
+                        
+                        <div class="payoff-summary">
+                            <div class="summary-item highlight">
+                                <span class="label">Time to Pay Off</span>
+                                <span id="payoffTime" class="value big">0 months</span>
+                            </div>
+                        </div>
+
+                        <div class="payoff-breakdown">
+                            <div class="breakdown-item">
+                                <span>Total Amount Paid</span>
+                                <span id="totalPaid">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Total Interest Paid</span>
+                                <span id="totalInterest" class="highlight-text">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Original Balance</span>
+                                <span id="originalBalance">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="payoff-tip">
+                            <h4>💡 Tip to Save Money</h4>
+                            <p id="savingsTip"></p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>📌 Credit Card Debt Tips</h3>
+                        <ul>
+                            <li><strong>Pay More Than Minimum:</strong> Paying only the minimum can take years to pay off</li>
+                            <li><strong>Stop Using the Card:</strong> Don't add new charges while paying off debt</li>
+                            <li><strong>Consider Balance Transfer:</strong> Look for 0% APR offers to save on interest</li>
+                            <li><strong>Avalanche Method:</strong> Pay off highest interest cards first</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="calculator-sidebar">
+                    <div class="ad-container ad-vertical">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6690487239486575"
+                             data-ad-slot="1234567894"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const balanceInput = document.getElementById('balance');
+        const interestRateInput = document.getElementById('interestRate');
+        const monthlyPaymentInput = document.getElementById('monthlyPayment');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContainer = document.getElementById('result');
+
+        // Update minimum payment display
+        balanceInput.addEventListener('input', updateMinimumPayment);
+        interestRateInput.addEventListener('input', updateMinimumPayment);
+
+        function updateMinimumPayment() {
+            const balance = parseFloat(balanceInput.value) || 0;
+            const rate = parseFloat(interestRateInput.value) || 0;
+            const monthlyRate = rate / 100 / 12;
+            const minPayment = Math.max(25, balance * (monthlyRate + 0.01));
+            document.getElementById('minimumPayment').textContent = 
+                `Minimum payment: ${formatCurrency(minPayment)}`;
+        }
+
+        calculateBtn.addEventListener('click', calculatePayoff);
+        resetBtn.addEventListener('click', resetCalculator);
+
+        function calculatePayoff() {
+            const balance = parseFloat(balanceInput.value);
+            const annualRate = parseFloat(interestRateInput.value);
+            const payment = parseFloat(monthlyPaymentInput.value);
+
+            if (!balance || balance <= 0) {
+                alert('Please enter a valid balance');
+                return;
+            }
+
+            if (!payment || payment <= 0) {
+                alert('Please enter a valid monthly payment');
+                return;
+            }
+
+            const monthlyRate = annualRate / 100 / 12;
+            const minPayment = balance * monthlyRate;
+
+            if (payment <= minPayment) {
+                alert('Monthly payment must be greater than the minimum interest charge');
+                return;
+            }
+
+            // Calculate payoff time
+            let remainingBalance = balance;
+            let months = 0;
+            let totalPaid = 0;
+            const maxMonths = 600; // 50 years max
+
+            while (remainingBalance > 0 && months < maxMonths) {
+                const interestCharge = remainingBalance * monthlyRate;
+                const principalPayment = payment - interestCharge;
+                
+                if (principalPayment <= 0) {
+                    alert('Payment too low to pay off debt');
+                    return;
+                }
+
+                remainingBalance -= principalPayment;
+                totalPaid += payment;
+                months++;
+
+                // Last payment adjustment
+                if (remainingBalance < 0) {
+                    totalPaid += remainingBalance;
+                    remainingBalance = 0;
+                }
+            }
+
+            const totalInterest = totalPaid - balance;
+            const years = Math.floor(months / 12);
+            const remainingMonths = months % 12;
+            
+            let timeText = '';
+            if (years > 0) {
+                timeText = `${years} year${years > 1 ? 's' : ''} ${remainingMonths} month${remainingMonths !== 1 ? 's' : ''}`;
+            } else {
+                timeText = `${months} month${months !== 1 ? 's' : ''}`;
+            }
+
+            // Display results
+            document.getElementById('payoffTime').textContent = timeText;
+            document.getElementById('totalPaid').textContent = formatCurrency(totalPaid);
+            document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+            document.getElementById('originalBalance').textContent = formatCurrency(balance);
+
+            // Calculate savings tip
+            const doublePayment = payment * 2;
+            let fastMonths = 0;
+            let fastBalance = balance;
+            let fastTotal = 0;
+
+            while (fastBalance > 0 && fastMonths < maxMonths) {
+                const interest = fastBalance * monthlyRate;
+                const principal = Math.min(doublePayment - interest, fastBalance);
+                fastBalance -= principal;
+                fastTotal += principal + interest;
+                fastMonths++;
+            }
+
+            const savedInterest = totalInterest - (fastTotal - balance);
+            const savedMonths = months - fastMonths;
+
+            document.getElementById('savingsTip').textContent = 
+                `If you pay ${formatCurrency(doublePayment)}/month instead, you'll pay off in ${fastMonths} months and save ${formatCurrency(savedInterest)} in interest!`;
+
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function formatCurrency(amount) {
+            return '$' + Math.round(amount).toLocaleString('en-US');
+        }
+
+        function resetCalculator() {
+            balanceInput.value = '5000';
+            interestRateInput.value = '18';
+            monthlyPaymentInput.value = '200';
+            resultContainer.style.display = 'none';
+            updateMinimumPayment();
+        }
+
+        // Initialize
+        updateMinimumPayment();
+    });
+    </script>
 </body>
 </html>

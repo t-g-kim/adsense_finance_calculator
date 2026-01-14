@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Planner | Finance Calculator Hub</title>
+    <meta name="description" content="Free budget planner - Track your monthly income, expenses, and savings. Simple personal finance budgeting tool.">
+    <meta name="keywords" content="budget planner, monthly budget, expense tracker, income tracker, personal finance">
+    
+    <title>Budget Planner - Track Income & Expenses | Finance Calculator Hub</title>
     <link rel="stylesheet" href="css/style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575" crossorigin="anonymous"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -16,12 +22,182 @@
             </div>
         </div>
     </header>
+
     <main class="container">
         <div class="calculator-page">
-            <h2>📊 Budget Planner - Coming Soon</h2>
-            <p>Track your income, expenses, and savings goals.</p>
-            <a href="index.html" class="btn-primary">Back to Home</a>
+            <div class="calculator-header">
+                <h2>📊 Budget Planner</h2>
+                <p>Track your monthly income, expenses, and savings</p>
+            </div>
+
+            <div class="calculator-layout">
+                <div class="calculator-main">
+                    <div class="calculator-form">
+                        <h3>Monthly Income</h3>
+                        <div class="form-group">
+                            <label for="salary">Salary/Wages ($)</label>
+                            <input type="number" id="salary" placeholder="5000" value="5000" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="otherIncome">Other Income ($)</label>
+                            <input type="number" id="otherIncome" placeholder="0" value="0" min="0">
+                        </div>
+
+                        <h3 style="margin-top: 2rem;">Monthly Expenses</h3>
+                        <div class="form-group">
+                            <label for="housing">Housing (Rent/Mortgage) ($)</label>
+                            <input type="number" id="housing" placeholder="1500" value="1500" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="utilities">Utilities ($)</label>
+                            <input type="number" id="utilities" placeholder="200" value="200" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="food">Food & Groceries ($)</label>
+                            <input type="number" id="food" placeholder="600" value="600" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="transportation">Transportation ($)</label>
+                            <input type="number" id="transportation" placeholder="400" value="400" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="insurance">Insurance ($)</label>
+                            <input type="number" id="insurance" placeholder="300" value="300" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="entertainment">Entertainment ($)</label>
+                            <input type="number" id="entertainment" placeholder="200" value="200" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="other">Other Expenses ($)</label>
+                            <input type="number" id="other" placeholder="0" value="0" min="0">
+                        </div>
+
+                        <button id="calculateBtn" class="btn-primary btn-large">Calculate Budget</button>
+                        <button id="resetBtn" class="btn-secondary btn-large">Reset</button>
+                    </div>
+
+                    <div id="result" class="result-container" style="display: none;">
+                        <h3>Budget Summary</h3>
+                        
+                        <div class="budget-summary">
+                            <div class="summary-item">
+                                <span class="label">Total Income</span>
+                                <span id="totalIncome" class="value">$0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Total Expenses</span>
+                                <span id="totalExpenses" class="value">$0</span>
+                            </div>
+                            <div class="summary-item highlight">
+                                <span class="label">Net Savings</span>
+                                <span id="netSavings" class="value big">$0</span>
+                            </div>
+                        </div>
+
+                        <div id="budgetStatus" class="budget-status"></div>
+                    </div>
+                </div>
+
+                <aside class="calculator-sidebar">
+                    <div class="ad-container ad-vertical">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6690487239486575"
+                             data-ad-slot="1234567894"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContainer = document.getElementById('result');
+
+        calculateBtn.addEventListener('click', calculateBudget);
+        resetBtn.addEventListener('click', resetBudget);
+
+        function calculateBudget() {
+            // Income
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const otherIncome = parseFloat(document.getElementById('otherIncome').value) || 0;
+            const totalIncome = salary + otherIncome;
+
+            // Expenses
+            const housing = parseFloat(document.getElementById('housing').value) || 0;
+            const utilities = parseFloat(document.getElementById('utilities').value) || 0;
+            const food = parseFloat(document.getElementById('food').value) || 0;
+            const transportation = parseFloat(document.getElementById('transportation').value) || 0;
+            const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+            const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+            const other = parseFloat(document.getElementById('other').value) || 0;
+            
+            const totalExpenses = housing + utilities + food + transportation + insurance + entertainment + other;
+            const netSavings = totalIncome - totalExpenses;
+
+            // Display results
+            document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
+            document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('netSavings').textContent = formatCurrency(netSavings);
+
+            // Budget status
+            const statusDiv = document.getElementById('budgetStatus');
+            if (netSavings > 0) {
+                const savingsRate = (netSavings / totalIncome * 100).toFixed(1);
+                statusDiv.innerHTML = `
+                    <div style="background: #d1fae5; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #10b981;">
+                        <h4 style="color: #065f46; margin-bottom: 0.5rem;">✅ Great! You're saving money!</h4>
+                        <p style="color: #047857;">You're saving ${savingsRate}% of your income (${formatCurrency(netSavings)}/month).</p>
+                        <p style="color: #047857; margin-top: 0.5rem;">Annual savings: ${formatCurrency(netSavings * 12)}</p>
+                    </div>
+                `;
+            } else if (netSavings === 0) {
+                statusDiv.innerHTML = `
+                    <div style="background: #fef3c7; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+                        <h4 style="color: #92400e; margin-bottom: 0.5rem;">⚠️ Breaking Even</h4>
+                        <p style="color: #92400e;">Your income equals your expenses. Try to reduce expenses or increase income to start saving.</p>
+                    </div>
+                `;
+            } else {
+                const deficit = Math.abs(netSavings);
+                statusDiv.innerHTML = `
+                    <div style="background: #fecaca; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #ef4444;">
+                        <h4 style="color: #991b1b; margin-bottom: 0.5rem;">⚠️ Budget Deficit</h4>
+                        <p style="color: #991b1b;">You're spending ${formatCurrency(deficit)} more than you earn each month.</p>
+                        <p style="color: #991b1b; margin-top: 0.5rem;">Consider reducing expenses or finding additional income sources.</p>
+                    </div>
+                `;
+            }
+
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function formatCurrency(amount) {
+            return '$' + Math.round(amount).toLocaleString('en-US');
+        }
+
+        function resetBudget() {
+            document.getElementById('salary').value = '5000';
+            document.getElementById('otherIncome').value = '0';
+            document.getElementById('housing').value = '1500';
+            document.getElementById('utilities').value = '200';
+            document.getElementById('food').value = '600';
+            document.getElementById('transportation').value = '400';
+            document.getElementById('insurance').value = '300';
+            document.getElementById('entertainment').value = '200';
+            document.getElementById('other').value = '0';
+            resultContainer.style.display = 'none';
+        }
+    });
+    </script>
 </body>
 </html>

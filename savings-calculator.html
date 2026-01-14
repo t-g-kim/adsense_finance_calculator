@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Planner | Finance Calculator Hub</title>
+    <meta name="description" content="Free savings calculator with compound interest - Calculate your savings growth with monthly deposits and interest rates.">
+    <meta name="keywords" content="savings calculator, compound interest calculator, savings growth, interest calculator">
+    
+    <title>Savings Calculator - Calculate Compound Interest | Finance Calculator Hub</title>
     <link rel="stylesheet" href="css/style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575" crossorigin="anonymous"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -16,12 +22,163 @@
             </div>
         </div>
     </header>
+
     <main class="container">
         <div class="calculator-page">
-            <h2>📊 Budget Planner - Coming Soon</h2>
-            <p>Track your income, expenses, and savings goals.</p>
-            <a href="index.html" class="btn-primary">Back to Home</a>
+            <div class="calculator-header">
+                <h2>💵 Savings Calculator</h2>
+                <p>Calculate your savings growth with compound interest</p>
+            </div>
+
+            <div class="calculator-layout">
+                <div class="calculator-main">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="initialDeposit">Initial Deposit ($)</label>
+                            <input type="number" id="initialDeposit" placeholder="5000" value="5000" min="0" step="100">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthlyDeposit">Monthly Deposit ($)</label>
+                            <input type="number" id="monthlyDeposit" placeholder="200" value="200" min="0" step="10">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interestRate">Annual Interest Rate (%)</label>
+                            <input type="number" id="interestRate" placeholder="5" value="5" min="0" max="20" step="0.1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="years">Time Period (years)</label>
+                            <input type="number" id="years" placeholder="10" value="10" min="1" max="50" step="1">
+                        </div>
+
+                        <button id="calculateBtn" class="btn-primary btn-large">Calculate Savings</button>
+                        <button id="resetBtn" class="btn-secondary btn-large">Reset</button>
+                    </div>
+
+                    <div id="result" class="result-container" style="display: none;">
+                        <h3>Savings Summary</h3>
+                        
+                        <div class="savings-summary">
+                            <div class="summary-item highlight">
+                                <span class="label">Future Value</span>
+                                <span id="futureValue" class="value big">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="savings-breakdown">
+                            <div class="breakdown-item">
+                                <span>Total Deposits</span>
+                                <span id="totalDeposits">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Total Interest Earned</span>
+                                <span id="totalInterest" class="highlight-text">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="savings-info">
+                            <p id="savingsMessage"></p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>💡 How Compound Interest Works</h3>
+                        <p>Compound interest is when you earn interest on both your initial deposit and the interest that accumulates over time. The longer you save, the more your money grows!</p>
+                        <ul>
+                            <li><strong>Initial Deposit:</strong> Your starting amount</li>
+                            <li><strong>Monthly Deposits:</strong> Regular contributions</li>
+                            <li><strong>Interest Rate:</strong> Annual percentage yield (APY)</li>
+                            <li><strong>Time:</strong> Number of years to save</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="calculator-sidebar">
+                    <div class="ad-container ad-vertical">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6690487239486575"
+                             data-ad-slot="1234567894"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const initialDepositInput = document.getElementById('initialDeposit');
+        const monthlyDepositInput = document.getElementById('monthlyDeposit');
+        const interestRateInput = document.getElementById('interestRate');
+        const yearsInput = document.getElementById('years');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContainer = document.getElementById('result');
+
+        calculateBtn.addEventListener('click', calculateSavings);
+        resetBtn.addEventListener('click', resetCalculator);
+
+        function calculateSavings() {
+            const initial = parseFloat(initialDepositInput.value) || 0;
+            const monthly = parseFloat(monthlyDepositInput.value) || 0;
+            const rate = parseFloat(interestRateInput.value) / 100;
+            const years = parseInt(yearsInput.value);
+
+            if (years <= 0) {
+                alert('Please enter a valid time period');
+                return;
+            }
+
+            // Calculate compound interest with monthly contributions
+            const monthlyRate = rate / 12;
+            const months = years * 12;
+            
+            // Future value of initial deposit
+            const fvInitial = initial * Math.pow(1 + monthlyRate, months);
+            
+            // Future value of monthly deposits (annuity)
+            let fvMonthly = 0;
+            if (monthlyRate > 0) {
+                fvMonthly = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            } else {
+                fvMonthly = monthly * months;
+            }
+            
+            const futureValue = fvInitial + fvMonthly;
+            const totalDeposits = initial + (monthly * months);
+            const totalInterest = futureValue - totalDeposits;
+
+            // Display results
+            document.getElementById('futureValue').textContent = formatCurrency(futureValue);
+            document.getElementById('totalDeposits').textContent = formatCurrency(totalDeposits);
+            document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+            
+            const message = `In ${years} years, your ${formatCurrency(totalDeposits)} in deposits will grow to ${formatCurrency(futureValue)}, earning ${formatCurrency(totalInterest)} in interest!`;
+            document.getElementById('savingsMessage').textContent = message;
+
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function formatCurrency(amount) {
+            return '$' + Math.round(amount).toLocaleString('en-US');
+        }
+
+        function resetCalculator() {
+            initialDepositInput.value = '5000';
+            monthlyDepositInput.value = '200';
+            interestRateInput.value = '5';
+            yearsInput.value = '10';
+            resultContainer.style.display = 'none';
+        }
+    });
+    </script>
 </body>
 </html>
