@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free mortgage calculator - Calculate monthly payments, total interest, and amortization schedule. Compare 15 vs 30 year mortgages with taxes and insurance.">
+    <meta name="keywords" content="mortgage calculator, home loan calculator, mortgage payment, amortization schedule, property tax calculator">
+    
+    <title>Mortgage Calculator - Calculate Home Loan Payments | Finance Calculator Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6690487239486575"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><a href="index.html">💰 Finance Calculator Hub</a></h1>
+                <nav><a href="index.html" class="nav-link">Home</a></nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="calculator-page">
+            <div class="calculator-header">
+                <h2>🏠 Mortgage Calculator</h2>
+                <p>Calculate your monthly mortgage payment with taxes and insurance</p>
+            </div>
+
+            <div class="calculator-layout">
+                <div class="calculator-main">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="homePrice">Home Price ($)</label>
+                            <input type="number" id="homePrice" placeholder="300000" min="10000" step="1000" value="300000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="downPayment">Down Payment ($)</label>
+                            <input type="number" id="downPayment" placeholder="60000" min="0" step="1000" value="60000">
+                            <small id="downPaymentPercent">20% of home price</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loanTerm">Loan Term (years)</label>
+                            <select id="loanTerm">
+                                <option value="30" selected>30 years</option>
+                                <option value="20">20 years</option>
+                                <option value="15">15 years</option>
+                                <option value="10">10 years</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interestRate">Interest Rate (% per year)</label>
+                            <input type="number" id="interestRate" placeholder="6.5" min="0" max="20" step="0.01" value="6.5">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyTax">Annual Property Tax ($)</label>
+                            <input type="number" id="propertyTax" placeholder="3000" min="0" step="100" value="3000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homeInsurance">Annual Home Insurance ($)</label>
+                            <input type="number" id="homeInsurance" placeholder="1200" min="0" step="100" value="1200">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hoaFees">Monthly HOA Fees ($)</label>
+                            <input type="number" id="hoaFees" placeholder="0" min="0" step="10" value="0">
+                        </div>
+
+                        <button id="calculateBtn" class="btn-primary btn-large">Calculate Payment</button>
+                        <button id="resetBtn" class="btn-secondary btn-large">Reset</button>
+                    </div>
+
+                    <div id="result" class="result-container" style="display: none;">
+                        <h3>Monthly Payment Breakdown</h3>
+                        
+                        <div class="mortgage-summary">
+                            <div class="summary-item highlight">
+                                <span class="label">Total Monthly Payment</span>
+                                <span id="totalPayment" class="value big">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="payment-breakdown">
+                            <h4>Payment Details</h4>
+                            <div class="breakdown-item">
+                                <span>Principal & Interest</span>
+                                <span id="principalInterest">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Property Tax</span>
+                                <span id="monthlyTax">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Home Insurance</span>
+                                <span id="monthlyInsurance">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>HOA Fees</span>
+                                <span id="monthlyHOA">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="loan-summary">
+                            <h4>Loan Summary</h4>
+                            <p><strong>Loan Amount:</strong> <span id="loanAmount">$0</span></p>
+                            <p><strong>Total Interest Paid:</strong> <span id="totalInterest">$0</span></p>
+                            <p><strong>Total Amount Paid:</strong> <span id="totalPaid">$0</span></p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>📌 Understanding Your Mortgage</h3>
+                        <ul>
+                            <li><strong>Principal & Interest:</strong> Your loan repayment amount</li>
+                            <li><strong>Property Tax:</strong> Annual tax divided by 12 months</li>
+                            <li><strong>Home Insurance:</strong> Required by most lenders</li>
+                            <li><strong>HOA Fees:</strong> Homeowners Association monthly fees</li>
+                            <li><strong>PMI:</strong> Required if down payment is less than 20%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <aside class="calculator-sidebar">
+                    <div class="ad-container ad-vertical">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6690487239486575"
+                             data-ad-slot="1234567894"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/mortgage-calculator.js"></script>
+</body>
+</html>
