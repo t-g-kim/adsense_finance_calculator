@@ -16,6 +16,8 @@
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
 * {
